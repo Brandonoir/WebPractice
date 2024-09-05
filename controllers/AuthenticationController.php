@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__.'/../database/UserDatabaseQueries/UserTable.php');
+require_once(__DIR__.'/InitiateSession.php');
 
 class AuthenticationCtrlr{
     private $userDb;
@@ -42,21 +43,8 @@ class AuthenticationCtrlr{
         $postData = $_POST;
 
         if($loginUser->validateLogin($postData)){
-            if(isset($_SESSION['email'])){
-                session_destroy();
-            }
-    
-            session_start();
-    
-            session_regenerate_id(true);
-
-            $_SESSION['email'] = $postData['email'];
-            $_SESSION['token'] = bin2hex(random_bytes(32));
-
-            // Set secure session settings
-            ini_set('session.cookie_httponly', 1);
-            ini_set('session.cookie_secure', 1);
-
+            $session = new Session;
+            $session->initiateSession($postData['email']);
             header('Location: views/home.view.php');
             exit();
         } else {
