@@ -1,5 +1,5 @@
 <?php
-require('../database/post_db.php');
+require('../models/post.model.php');
 $postDb = new PostDb;
 
 $posts = $postDb->displayPost();
@@ -13,7 +13,8 @@ $posts = $postDb->displayPost();
 </head>
 <body>
     <div>
-        <form action="../controllers/create-post.php" method="post">
+        <form action="../Router.php" method="post">
+            <input type="hidden" name="action" value="create_post">
             <label for="post_title">Title</label>
             <input type="text" name="post_title">
             <label for="post_body">Body</label>

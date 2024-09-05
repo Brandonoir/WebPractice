@@ -1,10 +1,11 @@
 <?php
-require('database.php');
+require_once(__DIR__.'/../database/database.php');
+
 class PostDb {
     private $db;
 
     public function __construct() {
-        $database = new Database();
+        $database = new Database;
         $this->db = $database->getConnection();
     }
 
@@ -16,6 +17,7 @@ class PostDb {
             $statement -> bindValue(':body', $post_body);
             $statement -> execute();
             $statement -> closeCursor();
+
         } catch(PDOException $e) {
             echo 'Error '. $e->getMessage();
         }

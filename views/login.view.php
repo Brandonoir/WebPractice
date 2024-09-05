@@ -7,7 +7,8 @@
 </head>
 <body>
 	<div>
-		<form action="../controllers/login.php" method="post">
+		<form action="../Router.php" method="post">
+		<input type="hidden" name="action" value="login_user">
 		<label for="email">Email</label>
 		<input type="email" name="email">
 		<label for="password">Password</label>
@@ -16,7 +17,8 @@
 		</form>
 	</div>
 	<div style="margin-top: 25px;">
-	<form  action="../controllers/register.php" method="post">
+	<form  action="../Router.php" method="post">
+	<input type="hidden" name="action" value="register_user">
 		<label for="email">Email</label>
 		<input type="email" name="email">
 		<label for="password">Password</label>

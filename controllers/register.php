@@ -1,52 +1,37 @@
 <?php
-require('../database/user_db.php');
+require_once(__DIR__.'/../database/UserDatabaseQueries/EmailValidation.php');
 
 class RegisterUser {
     private $userDb;
+    private $validateEmail;
+    private $errors = [];
 
     public function __construct(UserDb $userDb) {
-        $this->userDb = $userDb;
+        $this->userDb = $userDb; // Database connection
     }
 
-    public function isEmailUnique($email) {
-        return $this->userDb->isEmailUnique($email);
-    }
+    public function validateFields(array $postData) {
+        $email = isset($postData['email']) ? filter_var($postData['email'], FILTER_VALIDATE_EMAIL) : null;
+        $password = isset($postData['password']) ? $postData['password'] : '';
 
-    public function createUser($email, $password) {
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $this->userDb->createUser($email, $hashedPassword);
-    }
-}
-
-// Create an instance of UserDb
-$database = new UserDb();
-
-// Check if the users table exists, if not, create it
-if (!$database->checkUsersTableExists()) {
-    $database->createUsersTable();
-}
-
-// Create an instance of RegisterUser, passing the UserDb instance
-$userRegistration = new RegisterUser($database);
-
-// user registration
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the values from the form
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-
-    // Validate the inputs
-    if ($email && !empty($password)) {
-        // Check if the email is unique
-        if ($userRegistration->isEmailUnique($email)) {
-            // Create the user
-            $userRegistration->createUser($email, $password); 
-            echo "Registration successful!";
-        } else {
-            echo "Email must be unique. Please use a different email.";
+        if (!$email) {
+            $this->errors[] = "Invalid email address.";
         }
-    } else {
-        echo "Please fill in all fields correctly.";
+
+        if (empty($password)) {
+            $this->errors[] = "Invalid password.";
+        }
+
+        $this->validateEmail = new EmailValidation;
+        if (empty($this->errors) && !$this->validateEmail->isEmailUnique($email)) {
+            $this->errors[] = "Email must be unique. Please use a different email.";
+        }
+
+        return empty($this->errors);
+    }
+
+    public function getErrors() {
+        return $this->errors;
     }
 }
 ?>

@@ -1,45 +1,44 @@
 <?php
-require('../database/user_db.php');
+require_once(__DIR__.'/../database/UserDatabaseQueries/AuthUser.php');
 
 class LoginUser {
-    private $userDb; // Database connection 'placeholder'
+    private $userDb;
+    private $authUser;
+    private $errors = []; 
 
     public function __construct(UserDb $userDb) {
         $this->userDb = $userDb;
     }
 
-    // Method to authenticate user
-    public function authenticateUser($email, $password) {
-        return $this->userDb->authenticateUser($email, $password);
-    }
-}
+    //validate login credentials
+    public function validateLogin(array $loginCreds) {
+        
+        // Retrieve the input values from the form
+        $email = isset($loginCreds['email']) ? filter_var($loginCreds['email'], FILTER_VALIDATE_EMAIL) : null;
+        $password = isset($loginCreds['password']) ? $loginCreds['password'] : '';
 
-// Initialize UserDb class
-$database = new UserDb(); 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the input values from the form
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-
-    // Validate the inputs
-    if ($email && !empty($password)) {
-        // Pass the UserDb instance to LoginUser
-        $loginUser = new LoginUser($database); 
-        // Authenticate
-        $isAuthenticated = $loginUser->authenticateUser($email, $password); 
-
-        //echo $isAuthenticated ?  "Login successful!" :  "Invalid email or password. Please try again.";
-
-        if($isAuthenticated){
-            header('Location:../views/home-view.php');
-            exit;
-        } else{
-            echo "Invalid email or password. Please try again.";
+        // Validate the inputs
+        if (!$email) {
+            $this->errors[] = "Invalid email";
+        }
+        
+        if(empty($password)){
+            $this->errors[] = "Invalid password";
         }
 
-    } else {
-        echo "Please fill in all fields correctly.";
+        // Authenticate
+        $this->authUser = new AuthUser;
+        if(empty($this->errors) && !$this->authUser->authenticateUser($email, $password)){
+            $this->errors[] = $this->authUser->getAuthErrors();
+        }
+
+        return empty($this->errors);
+    }
+    //get Login errors
+    public function getErrors() {
+        return $this->errors;
     }
 }
+
+
 
