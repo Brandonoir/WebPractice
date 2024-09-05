@@ -23,3 +23,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['ac
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === "login_user"){
     $authController->login($_POST);
 }
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === "logout"){
+    $authController->logout($_POST);
+}
+
+
+session_start();
+$sessionData = $_SESSION;
+
+if(empty($sessionData)){
+    header('Location: views/login.view.php');
+    exit();
+}

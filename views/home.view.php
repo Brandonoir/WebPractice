@@ -1,4 +1,14 @@
 <?php
+session_start();
+$sessionData = $_SESSION;
+
+if(empty($sessionData)){
+    header('Location: login.view.php');
+    exit();
+}
+
+print_r($sessionData);
+
 require('../models/post.model.php');
 $postDb = new PostDb;
 
@@ -37,5 +47,9 @@ $posts = $postDb->displayPost();
             }
         ?>
     </div>
+    <form action="../Router.php" method="post">
+        <input type="hidden" name="action" value="logout">
+        <input type="submit" name="logout" value="Logout"> 
+    </form>
 </body>
 </html>

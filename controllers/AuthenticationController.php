@@ -37,10 +37,26 @@ class AuthenticationCtrlr{
     //login
     public function login(){
         //strictly login functions
+
         $loginUser = new LoginUser($this->userDb);
         $postData = $_POST;
 
         if($loginUser->validateLogin($postData)){
+            if(isset($_SESSION['email'])){
+                session_destroy();
+            }
+    
+            session_start();
+    
+            session_regenerate_id(true);
+
+            $_SESSION['email'] = $postData['email'];
+            $_SESSION['token'] = bin2hex(random_bytes(32));
+
+            // Set secure session settings
+            ini_set('session.cookie_httponly', 1);
+            ini_set('session.cookie_secure', 1);
+
             header('Location: views/home.view.php');
             exit();
         } else {
@@ -51,6 +67,9 @@ class AuthenticationCtrlr{
 
     //logout
     public function logout(){
-        //strictly logout functions
+        session_destroy();
+        setcookie(session_name(), '', time() - 3600, '/');
+        header('Location: views/login.view.php');
+        exit();
     }
 }
