@@ -1,12 +1,11 @@
 <?php
-require_once(__DIR__.'/../database.php');
+// require_once(__DIR__.'/../../database/database.php');
+require_once('iUserTable.php');
 
-
-class UserTable{
+class UserTable implements IUserTable {
     private $db;
 
-    public function __construct(){
-        $database = new Database;
+    public function __construct(DatabaseInterface $database){
         $this->db = $database->getConnection();
     }
 

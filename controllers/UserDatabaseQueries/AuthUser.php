@@ -1,12 +1,12 @@
 <?php
-require_once(__DIR__.'/../database.php');
+// require_once(__DIR__.'/../../database/database.php');
+require_once('iAuthUser.php');
 
-class AuthUser{
+class AuthUser implements IAuthUser{
     private $db;
     private $authErrors=[];
 
-    public function __construct() {
-        $database = new Database;
+    public function __construct(DatabaseInterface $database) {
         $this->db = $database->getConnection();
     }
 

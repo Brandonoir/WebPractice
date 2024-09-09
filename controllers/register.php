@@ -1,12 +1,12 @@
 <?php
-require_once(__DIR__.'/../database/UserDatabaseQueries/EmailValidation.php');
+require_once(__DIR__.'/UserDatabaseQueries/EmailValidation.php');
 
 class RegisterUser {
     private $userDb;
     private $validateEmail;
     private $errors = [];
 
-    public function __construct(UserDb $userDb) {
+    public function __construct(UserModelInterface $userDb) {
         $this->userDb = $userDb; // Database connection
     }
 

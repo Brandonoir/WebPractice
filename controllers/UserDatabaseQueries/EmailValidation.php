@@ -1,7 +1,7 @@
 <?php
-require_once(__DIR__.'/../database.php');
+require_once('iEmailValidation.php');
 
-class EmailValidation{
+class EmailValidation implements IEmailValidation{
     private $db;
 
     public function __construct() {

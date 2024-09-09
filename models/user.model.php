@@ -1,11 +1,10 @@
 <?php
-require_once(__DIR__.'/../database/database.php');
+require_once('iUserModel.php');
 
-class UserDb {
+class UserDb implements UserModelInterface{
     private $db;
 
-    public function __construct() {
-        $database = new Database;
+    public function __construct(DatabaseInterface $database) {
         $this->db = $database->getConnection();
     }
 

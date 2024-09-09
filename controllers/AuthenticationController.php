@@ -1,18 +1,20 @@
 <?php
-require_once(__DIR__.'/../database/UserDatabaseQueries/UserTable.php');
+require_once(__DIR__.'/UserDatabaseQueries/UserTable.php');
 require_once(__DIR__.'/InitiateSession.php');
 
 class AuthenticationCtrlr{
+    private $db;
     private $userDb;
     private $userTable;
 
-    public function __construct(UserDb $userDb) {
-        $this->userDb = $userDb; // Database connection 'placeholder'
+    public function __construct(UserModelInterface $userDb, DatabaseInterface $database) {
+        $this->userDb = $userDb;
+        $this->db = $database;
     }
 
     //register
     public function register() {
-        $this->userTable = new UserTable;
+        $this->userTable = new UserTable($this->db);
 
         // Check if the users table exists, if not, create it
         if (!$this->userTable->checkUsersTableExists()) {

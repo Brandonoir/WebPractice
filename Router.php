@@ -1,16 +1,18 @@
 <?php
 //routes the form from views to the class methods needed
+require('database/database.php');
 require('controllers/AuthenticationController.php');
 require('controllers/BlogPostController.php');
 require('controllers/register.php');
 require('controllers/login.php');
-require('controllers/Validation.php');
+require('controllers/BlogValidation.php');
 require('models/user.model.php');
 require('models/post.model.php');
 
- $userDb = new UserDb;
+$database = new Database;
+$userDb = new UserDb($database);
 
- $authController = new AuthenticationCtrlr($userDb);
+ $authController = new AuthenticationCtrlr($userDb, $database);
  $postController = new BlogPostController;
 // $validation = new Validation;
 

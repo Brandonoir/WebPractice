@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/../database/UserDatabaseQueries/AuthUser.php');
+require_once(__DIR__.'/UserDatabaseQueries/AuthUser.php');
 
 class LoginUser {
     private $userDb;

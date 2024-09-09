@@ -1,0 +1,63 @@
+body {
+    background-image: url(../resources/images/blogpost-bg.jpg);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.auth-form {
+    width: 50%;
+    height: 420px;
+    align-content: center;
+    margin: 8% auto;
+    background-color: rgb(222, 184, 135, 0.8);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.email-label, .password-label {
+    text-align: left;
+    display: block;
+    width: 20%;
+}
+
+.email-input, .password-input {
+    display: block;
+    margin: auto;
+    margin-left: 20px;
+    width: 70%;
+}
+
+.auth-field {
+    display: flex;
+}
+
+.login-form {
+    width: 45%;
+    margin: auto;
+    border: dotted red;
+}
+
+.register-form {
+    width: 50%;
+    margin: auto;
+    border: solid black;
+}
+
+button {
+    display: block;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.register-redirect {
+    text-align: center;
+    margin: 25px 0;
+}
