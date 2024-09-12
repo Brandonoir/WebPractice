@@ -2,7 +2,7 @@
 // require_once(__DIR__.'/../../database/database.php');
 require_once('iAuthUser.php');
 
-class AuthUser implements IAuthUser{
+class AuthUser implements AuthUserInterface{
     private $db;
     private $authErrors=[];
 

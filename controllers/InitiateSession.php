@@ -1,6 +1,7 @@
 <?php
- 
- class Session{
+ require_once('iInitiateSession.php');
+
+ class Session implements InitSessionInterface{
     
     public function initiateSession($email){
         if(isset($_SESSION['email'])){

@@ -1,6 +1,6 @@
 <?php
 
-interface IAuthUser {
+interface AuthUserInterface {
     public function authenticateUser($email, $password);
     public function getAuthErrors();
 }

@@ -4,11 +4,20 @@ require('database/database.php');
 require('controllers/AuthenticationController.php');
 require('controllers/BlogPostController.php');
 require('controllers/register.php');
-require('controllers/login.php');
+// require('controllers/login.php');
 require('controllers/BlogValidation.php');
 require('models/user.model.php');
 require('models/post.model.php');
+require_once('rewrite/Login.php');
+require_once('controllers/InitiateSession.php');
+require_once('controllers/UserDatabaseQueries/AuthUser.php');
+require_once('rewrite/AuthValidation.php');
 
+$db = new Database;
+$authValidation = new AuthValidation;
+$initSession = new Session;
+$authUser = new AuthUser($db);
+$login = new LoginUser($authValidation, $authUser, $initSession);
 $database = new Database;
 $userDb = new UserDb($database);
 
@@ -23,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['ac
     $authController->register($_POST);
 }
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === "login_user"){
-    $authController->login($_POST);
+    $login->login($_POST);
 }
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] === "logout"){
     $authController->logout($_POST);

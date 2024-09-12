@@ -2,9 +2,41 @@
 // strictly for login
 
 class LoginUser {
+    private $errors = [];
+    private $validate;
+    private $authUser;
+    private $initSession;
 
-    public function loginUser() {
-        //get authentication
-        //start session
+    public function __construct(AuthValidationInterface $validate,
+                                AuthUserInterface $authUser,
+                                InitSessionInterface $initSession){
+        $this->validate = $validate;
+        $this->authUser = $authUser;
+        $this->initSession = $initSession;
+    }
+
+    public function login() {
+        $authData[] = $_POST['email'];
+        $authData[] = $_POST['password'];
+        //validate
+        // var_dump($authData);
+        if($this->validate->validate($authData)){
+            //authenticate
+            if(empty($this->errors) && !$this->authUser->authenticateUser($authData['email'], $authData['password'])){
+                $this->errors[] = $this->authUser->getAuthErrors();
+            }else{
+                //start session
+                $this->initSession->initiateSession($authData['email']);
+                header('Location: views/home.view.php');
+                exit();
+            }
+        } else {
+            $this->errors[] = $this->validate->getValidateErrors();
+        }
+        print_r($this->errors);
+    }
+    //get Login errors
+    public function getErrors() {
+        return $this->errors;
     }
 }

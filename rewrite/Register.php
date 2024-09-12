@@ -3,10 +3,10 @@
 
 class RegisterUser {
 
-    public function registerUser() {
+    public function registerControl() {
         //get validation
-        //get email verification
         //check user table
+        //get email verification
         //register user
     }
 }
