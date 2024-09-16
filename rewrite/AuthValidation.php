@@ -2,14 +2,13 @@
 require_once('iAuthValidation.php');
 
 class AuthValidation implements AuthValidationInterface {
-private $errors = [];
+    private $errors = [];
 
-    public function validate(array $authData): bool{
-        //validate inputs
-        $email = isset($authData['email']) ? filter_var($authData['email'], FILTER_VALIDATE_EMAIL) : null;
-        $password = isset($authData['password']) ? $authData['password'] : '';
+    public function validate(array $authData): bool {
+        $email = $authData['email'];
+        $password = $authData['password'];
 
-        if (!$email) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->errors[] = "Invalid email address.";
         }
 
@@ -17,9 +16,11 @@ private $errors = [];
             $this->errors[] = "Invalid password.";
         }
 
+        // Additional password validation rules could go here
+
         return empty($this->errors);
     }
-    //get Login errors
+
     public function getValidateErrors() {
         return $this->errors;
     }

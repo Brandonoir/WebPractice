@@ -7,17 +7,18 @@ class LoginUser {
     private $authUser;
     private $initSession;
 
-    public function __construct(AuthValidationInterface $validate,
+    public function __construct(AuthValidationInterface $authValidation,
                                 AuthUserInterface $authUser,
                                 InitSessionInterface $initSession){
-        $this->validate = $validate;
+        $this->validate = $authValidation;
         $this->authUser = $authUser;
         $this->initSession = $initSession;
     }
 
     public function login() {
-        $authData[] = $_POST['email'];
-        $authData[] = $_POST['password'];
+        $authData['email'] = $_POST['email'];
+        $authData['password'] = $_POST['password'];
+
         //validate
         // var_dump($authData);
         if($this->validate->validate($authData)){
