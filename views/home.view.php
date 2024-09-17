@@ -6,13 +6,6 @@ if(empty($sessionData)){
     header('Location: login.view.php');
     exit();
 }
-
-print_r($sessionData);
-
-require('../models/post.model.php');
-$postDb = new PostDb;
-
-$posts = $postDb->displayPost();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +25,7 @@ $posts = $postDb->displayPost();
             <button>Post</button>
         </form>
     </div>
-    <div style="margin-top: 25px;">
+    <!-- <div style="margin-top: 25px;">
         <?php
             if (!empty($posts)) {
                 foreach ($posts as $post) :?>
@@ -46,7 +39,7 @@ $posts = $postDb->displayPost();
                 echo "No posts found.";
             }
         ?>
-    </div>
+    </div> -->
     <form action="../Router.php" method="post">
         <input type="hidden" name="action" value="logout">
         <input type="submit" name="logout" value="Logout"> 

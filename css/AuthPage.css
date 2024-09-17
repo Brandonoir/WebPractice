@@ -1,63 +1,81 @@
 body {
+
     background-image: url(../resources/images/blogpost-bg.jpg);
-    background-size: 100vw 100vh;
+    background-size: 100vw, 100vh;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .auth-form {
-    width: 50%;
-    height: 420px;
+    width: 40%;
+    height: 500px;
     align-content: center;
-    margin: 8% auto;
-    background-color: rgb(222, 184, 135, 0.8);
+    margin: 50px auto auto auto;
+    border-radius: 25px;
+    background-image: url(../resources/images/old-paper-texture.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 h1 {
+    font-size: 50px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-top: 0;
+    margin-bottom: 75px;
 }
 
 .email-label, .password-label {
     text-align: left;
     display: block;
-    width: 20%;
+    width: 30%;
 }
 
 .email-input, .password-input {
     display: block;
     margin: auto;
+    font-size: 15px;
     margin-left: 20px;
-    width: 70%;
+    width: 60%;
 }
 
 .auth-field {
+    font-size: 20px;
     display: flex;
 }
 
+.auth-field:last-of-type {
+    margin-bottom: 50px;
+}
+
 .login-form {
-    width: 45%;
+    width: 55%;
     margin: auto;
-    border: dotted red;
 }
 
 .register-form {
-    width: 50%;
+    width: 55%;
     margin: auto;
-    border: solid black;
 }
 
 button {
+    font-size: 15px;
+    width: 80px;
     display: block;
     margin: auto;
 }
 
 a {
+    font-size: 17px;
     text-decoration: none;
-    color: black;
+    color: rgb(63, 63, 63);
 }
 
-.register-redirect {
+a:hover {
+    color: rgb(0, 0, 0);
+}
+
+.register-redirect, .login-redirect {
     text-align: center;
     margin: 25px 0;
 }

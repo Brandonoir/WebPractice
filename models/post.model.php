@@ -1,20 +1,31 @@
 <?php
-require_once(__DIR__.'/../database/database.php');
+require_once('iPostModel.php');
 
-class PostDb {
+class PostDb implements PostModelInterace{
     private $db;
+    private $email;
 
-    public function __construct() {
-        $database = new Database;
+    public function __construct(DatabaseInterface $database) {
         $this->db = $database->getConnection();
+        session_start();
+        $this->email = $_SESSION['email'];
     }
 
     public function createPost($post_title, $post_body){
         try{
-            $sql = 'INSERT INTO posts (post_title, post_body) VALUES(:title, :body)';
+            $sql = 'SELECT id FROM users WHERE email = :email';
+            $statement = $this->db->prepare($sql);
+            $statement->bindValue(':email', $this->email);
+            $statement->execute();
+            $result = $statement->fetch();
+            $uid = $result['id'];
+            $statement->closeCursor();
+
+            $sql = 'INSERT INTO posts (title, body, author_id) VALUES(:title, :body, :uid)';
             $statement = $this->db->prepare($sql);
             $statement -> bindValue(':title', $post_title);
             $statement -> bindValue(':body', $post_body);
+            $statement -> bindValue(':uid', $uid);
             $statement -> execute();
             $statement -> closeCursor();
 

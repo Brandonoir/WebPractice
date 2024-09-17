@@ -25,6 +25,9 @@
 				<button>Register</button>
 			</form>
 		</div>
+		<div class="login-redirect">
+			<a href="login.view.php">Login</a>
+		</div>
 	</div>
 </body>
 </html>

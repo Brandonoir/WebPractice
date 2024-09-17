@@ -1,5 +1,5 @@
 <?php
 
 interface UserModelInterface {
-    public function createuser($email, $password);
+    public function createuser(array $inputData);
 }

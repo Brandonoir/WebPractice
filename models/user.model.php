@@ -8,13 +8,13 @@ class UserDb implements UserModelInterface{
         $this->db = $database->getConnection();
     }
 
-    public function createUser($email, $password) {
+    public function createUser($data) {
         try {
             $sql = 'INSERT INTO users (email, password) VALUES (:email, :password)';
             // Prepare and bind the parameters
             $statement = $this->db->prepare($sql);
-            $statement->bindValue(':email', $email);
-            $statement->bindValue(':password', $password);
+            $statement->bindValue(':email', $data['email']);
+            $statement->bindValue(':password', $data['password']);
 
             // Execute statement
             $statement->execute();
